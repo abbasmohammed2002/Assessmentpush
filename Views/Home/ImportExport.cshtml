@@ -1,0 +1,227 @@
+﻿@page
+@model Assessments.Models.AssessmentViewModel
+
+<form method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-4">
+            <input type="file" id="fUpload" name="files" class="form-control" />
+        </div>
+        <div class="col-md-8">
+            <input type="button" id="btnUpload" value="Upload" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8" style="padding-top:10px;">
+            <button asp-controller="Assessments" asp-action="Export">Export</button>
+        </div>
+    </div>
+    <br />
+    <div id="dvData"></div>
+</form>
+<div id="result">
+
+
+    @*<table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].RecId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].UIC)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].CTEUIC)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].CIPCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].OBNo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].SchoolName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].FANo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].TestCode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].TestName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].TestDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].Teacher)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].Cluster)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].LastName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].AssessScore)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].AssessYear)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].PassFail)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].UpdateDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].UpdateBy)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].Comment)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].encLastName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].encFirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Assessments[0].Accepted)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in )
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RecId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UIC)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CTEUIC)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CIPCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OBNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SchoolName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FANo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TestCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TestName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TestDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Teacher)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cluster)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AssessScore)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AssessYear)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PassFail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UpdateDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UpdateBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comment)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.encLastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.encFirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Accepted)
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>*@
+</div>
+@section scripts {
+    <script>
+                $(document).ready(function () {
+                    $(document).ready(function () {
+                        $('#btnUpload').on('click', function () {
+                            var fileExtension = ['xls', 'xlsx'];
+                            var filename = $('#fUpload').val();
+                            if (filename.length == 0) {
+                                alert("Please select a file.");
+                                return false;
+                            }
+                            else {
+                                var extension = filename.replace(/^.*\./, '');
+                                if ($.inArray(extension, fileExtension) == -1) {
+                                    alert("Please select only excel files.");
+                                    return false;
+                                }
+                            }
+                            var fdata = new FormData();
+                            var fileUpload = $("#fUpload").get(0);
+                            var files = fileUpload.files;
+                            fdata.append(files[0].name, files[0]);
+                            $.ajax({
+                                type: "POST",
+                                url: "/Home/Import",
+                                beforeSend: function (xhr) {
+                                    xhr.setRequestHeader("XSRF-TOKEN",
+                                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                                },
+                                data: fdata,
+                                contentType: false,
+                                processData: false,
+                                success: function (response) {
+                                    if (response.length == 0)
+
+                                        alert('Some error occured while uploading');
+
+                                    else {
+                                        $('#result').html(response);
+                                    }
+                                },
+                                error: function (e) {
+                                    $('#dvData').html(e.responseText);
+                                }
+                            });
+                        })
+                    });
+                });</script>
+}
+
+

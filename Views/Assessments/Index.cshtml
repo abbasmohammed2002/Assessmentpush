@@ -1,0 +1,117 @@
+﻿@using Assessments.Models
+@model Assessments.Models.FAviewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<body>
+    <select id="cmbMoreFunction">
+        @{var i = 0;}
+        @foreach (string item in Model.FAname)
+        {
+            i += 1;
+            <option value=@i>@item.ToString()</option>
+
+        }
+
+    </select>
+    <div id="results"></div>
+</body>
+
+<form method="post" action="Export?testname=AutoDesk">
+    <div class="row">
+        <input id="testname" value="AutoDesk" type="hidden" />
+        <div id="xlret" class="col-md-8" style="padding-top:10px;">
+
+            <input type="submit" id="tx" />
+        </div>
+    </div>
+    <div id="dvData"></div>
+</form>
+
+@section scripts{
+    <script>
+
+        $('#cmbMoreFunction').change(function () {
+            var selectedValue = $("#cmbMoreFunction option:selected").text();
+            handlerFunctionA(selectedValue);
+});
+
+        //$('#tx').click(function () {
+        //    var selecttest = $("#cmbMoreFunction option:selected").text();
+        //    ExportFunction(selecttest);
+        //});
+
+        function ExportFunction(selecttest) {
+                           $.ajax({
+                url: "/Assessments/Export",
+                    type: 'post',
+                    data: { testname: selecttest},
+                    success: function (result) {
+                       $("#xlret").html(result);
+                    },
+                error: function () {
+                alert("error")    }
+                });
+
+        }
+
+
+
+        function handlerFunctionA(selectedValue) {
+            var table = '<table> <thead> <tr> <th> RecId </th> <th> UIC </th> <th> CTEUIC </th> <th> CIPCode </th> <th> OBNo </th> <th> SchoolName </th> <th>FANo</th> <th> TestCode </th> <th> TestName </th> <th> TestDate </th> <th> Teacher </th> <th> Cluster </th> <th> LastName </th> <th> FirstName </th><th> AssessScore </th><th> AssessYear </th><th> PassFail </th><th> UpdateDate </th><th> UpdateBy </th><th> Comment </th><th> encLastName </th><th> encFirstName </th><th> Accepted </th> </tr></thead>';
+                $.ajax({
+                url: "/Assessments/DropDown1",
+                    type: 'post',
+                    data: { testname: selectedValue},
+                    success: function (result) {
+                        $.each(result.assessments, function () {
+                            //var x = this.testDate || "no date";
+                            table += "<tr>";
+                            table += "<td>" + this.recId + "</td>";
+                            table += "<td>" + this.uic + "</td>";
+                            table += "<td>" + (this.cteuic || "") + "</td>";
+                            table += "<td>" + (this.cipCode || "") + "</td>";
+                            table += "<td>" + (this.obNo || "") + "</td>";
+                            table += "<td>" + (this.schoolName || "") + "</td>";
+                            table += "<td>" + (this.faNo || "") + "</td>";
+                            table += "<td>" + (this.testCode || "") + "</td>";
+                            table += "<td>" + (this.testName || "") + "</td>";
+                            if (this.testDate.includes("0001-01-01T00:00:00")) { table += "<td>" + ("NO Date") + "</td>"; }
+                            else { table += "<td>" + (this.testDate) + "</td>"; }
+                            table += "<td>" + (this.teacher || "") + "</td>";
+                            table += "<td>" + (this.cluster || "") + "</td>";
+                            table += "<td>" + (this.lastName || "") + "</td>";
+                            table += "<td>" + (this.firstName || "") + "</td>";
+                            table += "<td>" + (this.assessScore || "") + "</td>";
+                            table += "<td>" + (this.assessYear || "") + "</td>";
+                            table += "<td>" + (this.passFail || "") + "</td>";
+                            if (this.updateDate.includes("0001-01-01T00:00:00")) { table += "<td>" + ("NO Date") + "</td>"; }
+                            else { table += "<td>" + (this, updateDate) + "</td>"; }
+                            table += "<td>" + (this.updateBy || "") + "</td>";
+                            table += "<td>" + (this.comment || "") + "</td>";
+                            table += "<td>" + (this.encLastName || "") + "</td>";
+                            table += "<td>" + (this.encFirstName || "") + "</td>";
+                            table += "<td>" + (this.accepted || "")+ "</td>";
+                            table += "</tr>";
+                            //alert(list);
+                        })
+                        table += "</table>";
+                        $("#results").html(table);
+                    },
+                error: function () {
+                alert("error")    }
+                });
+
+}
+
+//    alert("do some stuff");
+
+
+/*function handlerFunctionB(){
+    alert("Do some other stuff");
+}*/
+
+    </script>
+}
